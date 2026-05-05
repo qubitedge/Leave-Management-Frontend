@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/jntu logo.jpeg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VoiceLeave | JNTU-GV</title>
+    <script>
+      // Global matchMedia polyfill to fix 'addListener' error
+      (function() {
+        var polyfill = function(query) {
+          return {
+            matches: false,
+            media: query,
+            onchange: null,
+            addListener: function() {},
+            removeListener: function() {},
+            addEventListener: function() {},
+            removeEventListener: function() {},
+            dispatchEvent: function() { return false; },
+          };
+        };
+        if (!window.matchMedia) {
+          window.matchMedia = polyfill;
+        } else {
+          var oldMM = window.matchMedia;
+          window.matchMedia = function(q) {
+            var mql = oldMM(q);
+            if (!mql.addListener) mql.addListener = function() {};
+            if (!mql.removeListener) mql.removeListener = function() {};
+            return mql;
+          };
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

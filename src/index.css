@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --font-jakarta: "Plus Jakarta Sans", sans-serif;
+  --color-brand: #2563eb;
+  --color-brand-light: #eff6ff;
+  --color-bg: #f7faff;
+  --color-surface: #ffffff;
+  --radius-card: 24px;
+  --radius-button: 14px;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    font-family: var(--font-jakarta);
+  }
+
+  body {
+    background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
+    min-height: 100vh;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .soft-shadow {
+    box-shadow: 
+      0 1px 3px rgba(0,0,0,0.02),
+      0 10px 20px -5px rgba(0,0,0,0.04);
+  }
+
+  .soft-shadow-lg {
+    box-shadow: 
+      0 1px 3px rgba(0,0,0,0.02),
+      0 20px 40px -10px rgba(0,0,0,0.08);
+  }
+
+  .premium-gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  }
+
+  .animate-in {
+    animation-duration: 0.6s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+
+  .slide-up {
+    animation-name: slideUp;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+* {
+  transition: all 0.25s ease;
+}
+
+/* Ant Design Modernization */
+.ant-btn {
+  border-radius: var(--radius-button) !important;
+  font-weight: 600 !important;
+}
+
+.ant-card, .card {
+  border-radius: var(--radius-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-card:hover, .card:hover {
+  transform: translateY(-4px);
+}
+
+.ant-tabs-ink-bar {
+  height: 3px !important;
+  border-radius: 3px !important;
+}
