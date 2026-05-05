@@ -28,6 +28,8 @@ const AuthorityDashboard: React.FC = () => {
     const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
     const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
     const [leaveType, setLeaveType] = useState('Casual');
+    const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+    const [previewAudio, setPreviewAudio] = useState<HTMLAudioElement | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -254,6 +256,26 @@ const AuthorityDashboard: React.FC = () => {
         }
     };
 
+    const handlePlayPreview = () => {
+        if (!recordedBlob) return;
+        
+        if (isPlayingPreview && previewAudio) {
+            previewAudio.pause();
+            setIsPlayingPreview(false);
+            return;
+        }
+
+        const url = URL.createObjectURL(recordedBlob);
+        const audio = new Audio(url);
+        setPreviewAudio(audio);
+        setIsPlayingPreview(true);
+        audio.play();
+        audio.onended = () => {
+            setIsPlayingPreview(false);
+            setPreviewAudio(null);
+        };
+    };
+
     const getStatusTag = (status: string) => {
         const s = status.toLowerCase();
         if (s === 'approved' || s === 'granted') return (
@@ -305,6 +327,7 @@ const AuthorityDashboard: React.FC = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.05 }}
                                     whileHover={{ y: -2 }}
+                                    onClick={() => handlePlayAudio(app.voice_blob_name)}
                                     className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between hover:shadow-md hover:border-brand/20 transition-all cursor-pointer group"
                                 >
                                     <div className="flex items-center space-x-4">
@@ -321,12 +344,17 @@ const AuthorityDashboard: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button 
-                                        type="text" 
-                                        onClick={(e) => { e.stopPropagation(); handlePlayAudio(app.voice_blob_name); }}
-                                        icon={<PlayCircleFilled className={`text-4xl transition-all ${currentlyPlaying === app.voice_blob_name ? 'text-brand' : 'text-brand/40 group-hover:text-brand'}`} />}
-                                        className="p-0 h-auto flex items-center justify-center hover:bg-transparent"
-                                    />
+                                    <div className="flex items-center">
+                                        {currentlyPlaying === app.voice_blob_name ? (
+                                            <div className="flex gap-1 items-center px-4">
+                                                <div className="w-1 h-4 bg-brand rounded-full animate-[bounce_1s_infinite_0ms]" />
+                                                <div className="w-1 h-6 bg-brand rounded-full animate-[bounce_1s_infinite_200ms]" />
+                                                <div className="w-1 h-4 bg-brand rounded-full animate-[bounce_1s_infinite_400ms]" />
+                                            </div>
+                                        ) : (
+                                            <PlayCircleFilled className="text-4xl text-brand/40 group-hover:text-brand transition-all" />
+                                        )}
+                                    </div>
                                 </motion.div>
                             ))
                         )}
@@ -626,6 +654,30 @@ const AuthorityDashboard: React.FC = () => {
                                                     {type}
                                                 </button>
                                             ))}
+                                        </div>
+
+                                        {/* Audio Preview Controls */}
+                                        <div className="w-full max-w-sm bg-slate-50/80 rounded-3xl p-4 flex items-center gap-4 border border-white">
+                                            <Button
+                                                shape="circle"
+                                                icon={isPlayingPreview ? <div className="flex gap-1 items-center justify-center"><div className="w-1.5 h-4 bg-blue-600 rounded-full animate-pulse" /><div className="w-1.5 h-6 bg-blue-600 rounded-full animate-pulse" /><div className="w-1.5 h-4 bg-blue-600 rounded-full animate-pulse" /></div> : <PlayCircleFilled className="text-2xl" />}
+                                                onClick={handlePlayPreview}
+                                                className="!h-14 !w-14 !bg-white !border-none shadow-sm text-blue-600 flex items-center justify-center"
+                                            />
+                                            <div className="flex-grow">
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recorded Audio</Text>
+                                                    <Text className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">{isPlayingPreview ? 'Playing...' : 'Ready'}</Text>
+                                                </div>
+                                                <div className="h-1.5 bg-white rounded-full overflow-hidden">
+                                                    <motion.div 
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: isPlayingPreview ? '100%' : '0%' }}
+                                                        transition={{ duration: 5, ease: "linear" }} // Approximation, would be better with real progress
+                                                        className="h-full bg-blue-500"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div className="flex gap-4 w-full max-w-xs">
