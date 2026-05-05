@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Button, Avatar, Typography, Drawer, App, Input } from 'antd';
+import { Layout, Menu, Button, Avatar, Typography, Drawer, App } from 'antd';
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -8,8 +8,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   AudioOutlined,
-  UserOutlined,
-  SearchOutlined
+  UserOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { supabase } from '../supabaseClient';

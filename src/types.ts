@@ -17,6 +17,7 @@ export interface LeaveApplication {
     is_half_day: boolean;
     current_level: number;
     faculty?: Profile;
+    voice_blob_name?: string;
 }
 export interface LeaveApproval {
     id: number;

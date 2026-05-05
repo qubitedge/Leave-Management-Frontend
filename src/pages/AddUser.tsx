@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Typography, Select, message, Radio } from 'antd';
+import { Form, Input, Button, Typography, message, Radio } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined, PhoneOutlined, UserAddOutlined } from '@ant-design/icons';
 import { supabase } from '../supabaseClient';
 

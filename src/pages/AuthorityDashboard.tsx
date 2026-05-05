@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Avatar, Spin, Button, message, Tabs, Tag, Badge } from 'antd';
+import { Typography, Avatar, Spin, Button, message, Tabs, Badge } from 'antd';
 import { 
     AudioOutlined, 
     LogoutOutlined,
@@ -215,7 +215,7 @@ const AuthorityDashboard: React.FC = () => {
         }
     };
 
-    const handlePlayAudio = async (blobName: string) => {
+    const handlePlayAudio = async (blobName: string | undefined) => {
         if (!blobName) {
             message.warning('No audio file found for this request');
             return;

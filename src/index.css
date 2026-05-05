@@ -1,21 +1,20 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 @theme {
-  --font-jakarta: "Plus Jakarta Sans", sans-serif;
-  --color-brand: #2563eb;
-  --color-brand-light: #eff6ff;
-  --color-bg: #f7faff;
-  --color-surface: #ffffff;
-  --radius-card: 24px;
-  --radius-button: 14px;
+    --font-jakarta: "Plus Jakarta Sans", sans-serif;
+    --color-brand: #2563eb;
+    --color-brand-light: #eff6ff;
+    --color-bg: #f7faff;
+    --color-surface: #ffffff;
+    --radius-card: 24px;
+    --radius-button: 14px;
 }
 
 @layer base {
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-  :root {
-    font-family: var(--font-jakarta);
-  }
+    :root {
+        font-family: var(--font-jakarta);
+    }
 
   body {
     background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
